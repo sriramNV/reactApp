@@ -29,6 +29,8 @@ function reducer(state, { type, payload }) {
         ...state,
         currentOp: `${state.currentOp || ""}${payload.digit}`,
       };
+    default:
+      return "default";
   }
 }
 
