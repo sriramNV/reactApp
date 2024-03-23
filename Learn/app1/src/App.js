@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [advice, setAdvise] = useState("");
+  const [count, setCount] = useState(0);
 
   async function getAdvise() {
     const res = await fetch("https://api.adviceslip.com/advice");
     const data = await res.json();
     setAdvise(data.slip.advice);
+    setCount((c) => c + 1);
   }
+
+  useEffect(function () {
+    getAdvise();
+  }, []);
 
   return (
     <>
-      <h1>Hello World</h1>
+      <h1>Hello World! Welcome to the spiritual place to get some advice</h1>
       <button onClick={getAdvise}>get Advise</button>
-      <p>{advice}</p>
+      <h2>{advice}</h2>
+      <Message count={count} />
     </>
+  );
+}
+
+function Message(props) {
+  return (
+    <h3>
+      you have read <strong>{props.count}</strong> pieces of advice
+    </h3>
   );
 }
 
