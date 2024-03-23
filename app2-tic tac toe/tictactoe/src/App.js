@@ -44,12 +44,13 @@ function Game() {
           Reset
         </button>
       </div>
-      <Grid Cell={state.cell} grid={grid} handleClick={handleClick} />
+      {state.cell}
+      <Grid cell={state.cell} grid={grid} handleClick={handleClick} />
     </div>
   );
 }
 
-function Grid({ grid }) {
+function Grid({ cell, grid, handleClick }) {
   return (
     <div style={{ display: "inline-block" }}>
       <div
@@ -64,7 +65,13 @@ function Grid({ grid }) {
       >
         {grid.map((row, rowIdx) =>
           row.map((cell, colIdx) => (
-            <Cell key={`${colIdx}-${rowIdx}`} cell={cell} />
+            <Cell
+              key={`${colIdx}-${rowIdx}`}
+              onClick={() => {
+                handleClick(colIdx, rowIdx);
+              }}
+              cell={cell}
+            />
           ))
         )}
       </div>
@@ -72,18 +79,27 @@ function Grid({ grid }) {
   );
 }
 
-function Cell({ cell, handleClick }) {
+function Cell({ cell, handleClick, k }) {
   return (
     <div style={cellStyle}>
-      <button onClick={handleClick}>{cell}</button>
+      <button
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        onClick={handleClick}
+      >
+        {console.log(k)}
+        {cell}
+      </button>
     </div>
   );
 }
 
 const cellStyle = {
   backgroundColor: "#fff",
-  height: 75,
-  width: 75,
+  height: 175,
+  width: 175,
 };
 
 const clone = (x) => JSON.parse(JSON.stringify(x));
@@ -91,11 +107,6 @@ const clone = (x) => JSON.parse(JSON.stringify(x));
 const NEXT_TURN = {
   O: "X",
   X: "O",
-};
-
-const initialState = {
-  grid: newTicTacToeGrid(),
-  turn: "X",
 };
 
 const reducer = (state, action) => {
