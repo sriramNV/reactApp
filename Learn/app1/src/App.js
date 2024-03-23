@@ -16,12 +16,12 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="d-inline-flex flex-column align-items-center align-self-center p-4 mar">
       <h1>Hello World! Welcome to the spiritual place to get some advice</h1>
       <button onClick={getAdvise}>get Advise</button>
       <h2>{advice}</h2>
       <Message count={count} />
-    </>
+    </div>
   );
 }
 
